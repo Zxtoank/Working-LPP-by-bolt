@@ -225,6 +225,7 @@ export const LayoutGenerator: React.FC<LayoutGeneratorProps> = ({
       <div className="bg-gray-50 rounded-xl p-4">
         <canvas
           ref={canvasRef}
+          id="layoutCanvas"
           width={CANVAS_WIDTH}
           height={CANVAS_HEIGHT}
           className="border border-gray-300 rounded-lg bg-white shadow-lg mx-auto block max-w-full h-auto"
