@@ -156,22 +156,22 @@ export const ExportPanel: React.FC<ExportPanelProps> = ({
 
   const handleExport = async (format: 'png' | 'pdf', dpi: number) => {
     // Check if premium feature and user doesn't have access
-    if (dpi >= 1200) {
-      if (!user) {
-        onAuthRequired();
-        return;
-      }
-      
-      const hasPremiumAccess = localStorage.getItem('locket-premium-access') === 'true';
-      const hasSubscription = localStorage.getItem(`subscription-${user.email}`);
-      
-      if (!user.isPremium && !hasPremiumAccess && !hasSubscription) {
-        // Store the pending download for after payment
-        localStorage.setItem('pending-premium-download', JSON.stringify({ format, dpi }));
-        handlePayPalPayment();
-        return;
-      }
-    }
+    if (dpi === 1200 && format === 'pdf') {
+  if (!user) {
+    onAuthRequired();
+    return;
+  }
+
+  const hasPremiumAccess = localStorage.getItem('locket-premium-access') === 'true';
+  const hasSubscription = localStorage.getItem(`subscription-${user.email}`);
+
+  if (!user.isPremium && !hasPremiumAccess && !hasSubscription) {
+    // Store the pending download for after payment
+    localStorage.setItem('pending-premium-download', JSON.stringify({ format, dpi }));
+    handlePayPalPayment();
+    return;
+  }
+}
 
     setIsExporting(true);
     
@@ -252,7 +252,7 @@ export const ExportPanel: React.FC<ExportPanelProps> = ({
       dpi: 1200,
       label: '1200DPI PNG',
       icon: FileImage,
-      premium: true,
+      premium: false,
       description: 'Ultra-high resolution',
       price: '$4.99'
     },
